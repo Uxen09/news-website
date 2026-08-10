@@ -1,1 +1,90 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan News</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        header {
+            background: #0b7a3b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #0b7a3b;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .news {
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #0b7a3b;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🇵🇰 Pakistan News</h1>
+    <p>The Latest News</p>
+</header>
+
+<nav>
+    <button onclick="showNews('Latest News')">Latest News</button>
+    <button onclick="showNews('Lahore News')">Lahore News</button>
+    <button onclick="showNews('Karachi News')">Karachi News</button>
+    <button onclick="showNews('Islamabad News')">Islamabad News</button>
+</nav>
+
+<div class="news" id="news">
+    <div class="card">
+        <h2>Latest News</h2>
+        <p>Pakistan ki latest news yahan show hogi.</p>
+    </div>
+</div>
+
+<script>
+function showNews(city) {
+    document.getElementById("news").innerHTML = `
+        <div class="card">
+            <h2>${city}</h2>
+            <p>${city} ki news yahan show hogi.</p>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
