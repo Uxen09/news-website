@@ -20,13 +20,17 @@ body {
 header {
     background: #087a3d;
     color: white;
-    padding: 20px;
+    padding: 18px;
     text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 28px;
+}
+
+header p {
+    margin: 6px 0 0;
 }
 
 nav {
@@ -43,7 +47,7 @@ nav button {
     background: #087a3d;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 14px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
@@ -57,6 +61,15 @@ nav button:hover {
     max-width: 900px;
     margin: 20px auto;
     padding: 10px;
+}
+
+.search {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 18px;
+    font-size: 15px;
 }
 
 #sectionTitle {
@@ -76,6 +89,7 @@ nav button:hover {
 .news-card h2 {
     margin-top: 0;
     color: #222;
+    font-size: 20px;
 }
 
 .news-card p {
@@ -83,9 +97,34 @@ nav button:hover {
     line-height: 1.6;
 }
 
+.news-card a {
+    display: inline-block;
+    margin-top: 8px;
+    background: #087a3d;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
 .news-card small {
     color: #087a3d;
     font-weight: bold;
+}
+
+.loading {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.error {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    color: #b00000;
+    border-radius: 8px;
 }
 
 footer {
@@ -102,7 +141,7 @@ footer {
 
 <header>
     <h1>🇵🇰 Pakistan News</h1>
-    <p>Latest News & Updates</p>
+    <p>Latest News & Updates from Pakistan</p>
 </header>
 
 <nav>
@@ -110,14 +149,26 @@ footer {
     <button onclick="showNews('lahore')">Lahore News</button>
     <button onclick="showNews('karachi')">Karachi News</button>
     <button onclick="showNews('islamabad')">Islamabad News</button>
-    <button onclick="showNews('national')">National Update</button>
+    <button onclick="showNews('national')">National Updates</button>
 </nav>
 
 <div class="container">
 
+    <input
+        type="text"
+        id="searchBox"
+        class="search"
+        placeholder="🔎 Search News..."
+        onkeyup="searchNews()"
+    >
+
     <h2 id="sectionTitle">Latest News</h2>
 
-    <div id="newsContainer"></div>
+    <div id="newsContainer">
+        <div class="loading">
+            Loading latest news...
+        </div>
+    </div>
 
 </div>
 
@@ -127,106 +178,178 @@ footer {
 
 <script>
 
-const news = {
+let currentCategory = "latest";
+let allNews = [];
 
-    latest: [
-        {
-            title: "پاکستان کی تازہ ترین خبریں",
-            text: "یہاں پاکستان کی تازہ ترین اہم خبریں اور قومی اپڈیٹس دکھائی جائیں گی۔",
-            source: "Latest News"
-        },
-        {
-            title: "ملک بھر کی اہم پیش رفت",
-            text: "پاکستان کے مختلف شہروں سے اہم معلومات اور تازہ اپڈیٹس یہاں شامل کی جائیں گی۔",
-            source: "Pakistan News"
-        }
-    ],
+const categories = {
 
-    lahore: [
-        {
-            title: "لاہور کی تازہ خبر",
-            text: "لاہور شہر سے متعلق تازہ ترین خبریں اور اہم مقامی اپڈیٹس یہاں دکھائی جائیں گی۔",
-            source: "Lahore News"
-        },
-        {
-            title: "لاہور میں اہم پیش رفت",
-            text: "لاہور کے مختلف علاقوں سے اہم معلومات اور خبریں یہاں شامل ہوں گی۔",
-            source: "Lahore News"
-        }
-    ],
+    latest: {
+        title: "Latest News",
+        query: "Pakistan latest news"
+    },
 
-    karachi: [
-        {
-            title: "کراچی کی تازہ خبر",
-            text: "کراچی شہر سے متعلق تازہ ترین خبریں اور مقامی اپڈیٹس یہاں دکھائی جائیں گی۔",
-            source: "Karachi News"
-        },
-        {
-            title: "کراچی میں اہم پیش رفت",
-            text: "کراچی کے مختلف علاقوں سے اہم معلومات اور خبریں یہاں شامل ہوں گی۔",
-            source: "Karachi News"
-        }
-    ],
+    lahore: {
+        title: "Lahore News",
+        query: "Lahore Pakistan news"
+    },
 
-    islamabad: [
-        {
-            title: "اسلام آباد کی تازہ خبر",
-            text: "اسلام آباد سے متعلق تازہ ترین خبریں اور اہم اپڈیٹس یہاں دکھائی جائیں گی۔",
-            source: "Islamabad News"
-        },
-        {
-            title: "وفاقی دارالحکومت کی اہم خبر",
-            text: "اسلام آباد میں ہونے والی اہم سرگرمیوں اور خبروں کی اپڈیٹس یہاں شامل ہوں گی۔",
-            source: "Islamabad News"
-        }
-    ],
+    karachi: {
+        title: "Karachi News",
+        query: "Karachi Pakistan news"
+    },
 
-    national: [
-        {
-            title: "قومی اپڈیٹ",
-            text: "پاکستان بھر سے قومی سطح کی اہم خبریں اور تازہ اپڈیٹس یہاں دکھائی جائیں گی۔",
-            source: "National Update"
-        },
-        {
-            title: "پاکستان کی اہم قومی خبر",
-            text: "ملک کی اہم قومی صورتحال اور تازہ معلومات یہاں شامل کی جائیں گی۔",
-            source: "National Update"
-        }
-    ]
+    islamabad: {
+        title: "Islamabad News",
+        query: "Islamabad Pakistan news"
+    },
+
+    national: {
+        title: "National Updates",
+        query: "Pakistan national news"
+    }
 
 };
 
-function showNews(category) {
 
-    const container = document.getElementById("newsContainer");
-    const title = document.getElementById("sectionTitle");
+async function showNews(category) {
 
-    const names = {
-        latest: "Latest News",
-        lahore: "Lahore News",
-        karachi: "Karachi News",
-        islamabad: "Islamabad News",
-        national: "National Update"
-    };
+    currentCategory = category;
 
-    title.innerText = names[category];
+    const container =
+        document.getElementById("newsContainer");
+
+    const title =
+        document.getElementById("sectionTitle");
+
+    title.innerText =
+        categories[category].title;
+
+    container.innerHTML = `
+        <div class="loading">
+            🔄 تازہ خبریں لوڈ ہو رہی ہیں...
+        </div>
+    `;
+
+    try {
+
+        const rssURL =
+            "https://news.google.com/rss/search?q=" +
+            encodeURIComponent(categories[category].query) +
+            "&hl=en-PK&gl=PK&ceid=PK:en";
+
+        const apiURL =
+            "https://api.rss2json.com/v1/api.json?rss_url=" +
+            encodeURIComponent(rssURL);
+
+        const response = await fetch(apiURL);
+
+        const data = await response.json();
+
+        if (!data.items || data.items.length === 0) {
+
+            container.innerHTML = `
+                <div class="error">
+                    کوئی خبر نہیں ملی۔
+                </div>
+            `;
+
+            return;
+        }
+
+        allNews = data.items;
+
+        displayNews(allNews);
+
+    } catch (error) {
+
+        container.innerHTML = `
+            <div class="error">
+                ❌ خبریں لوڈ نہیں ہو سکیں۔<br><br>
+                براہِ کرم دوبارہ کوشش کریں۔
+            </div>
+        `;
+
+    }
+
+}
+
+
+function displayNews(newsList) {
+
+    const container =
+        document.getElementById("newsContainer");
 
     container.innerHTML = "";
 
-    news[category].forEach(item => {
+    newsList.forEach(item => {
+
+        const date =
+            item.pubDate
+            ? new Date(item.pubDate).toLocaleString()
+            : "";
 
         container.innerHTML += `
+
             <div class="news-card">
+
                 <h2>${item.title}</h2>
-                <p>${item.text}</p>
-                <small>Source: ${item.source}</small>
+
+                <p>
+                    تازہ خبر اور مزید معلومات کے لیے
+                    نیچے Read More پر کلک کریں۔
+                </p>
+
+                <small>
+                    📰 ${date}
+                </small>
+
+                <br>
+
+                <a
+                    href="${item.link}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Read More →
+                </a>
+
             </div>
+
         `;
 
     });
 
 }
 
+
+function searchNews() {
+
+    const search =
+        document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase();
+
+    if (!search) {
+
+        displayNews(allNews);
+
+        return;
+    }
+
+    const filtered =
+        allNews.filter(item =>
+            item.title
+            .toLowerCase()
+            .includes(search)
+        );
+
+    displayNews(filtered);
+
+}
+
+
+// Website open ہوتے ہی Latest News
 showNews("latest");
 
 </script>
