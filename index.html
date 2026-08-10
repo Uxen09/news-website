@@ -1,258 +1,273 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan News</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pakistan News</title><style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f2f2f2;
+}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f2f2f2;
-        }
+header {
+    background: #0b7a3b;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
 
-        header {
-            background: #0b7a3b;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
 
-        header h1 {
-            margin: 0;
-        }
+nav {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px #aaa;
+}
 
-        nav {
-            background: white;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px #aaa;
-        }
+nav button {
+    background: #0b7a3b;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    margin: 5px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
 
-        nav button {
-            background: #0b7a3b;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            margin: 5px;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-        }
+nav button:hover {
+    background: #075c2c;
+}
 
-        nav button:hover {
-            background: #075c2c;
-        }
+.search {
+    text-align: center;
+    padding: 20px;
+}
 
-        .search {
-            text-align: center;
-            padding: 20px;
-        }
+.search input {
+    width: 80%;
+    max-width: 500px;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
 
-        .search input {
-            width: 80%;
-            max-width: 500px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+}
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 15px;
-        }
+.section-title {
+    color: #0b7a3b;
+    border-bottom: 3px solid #0b7a3b;
+    padding-bottom: 8px;
+}
 
-        .section-title {
-            color: #0b7a3b;
-            border-bottom: 3px solid #0b7a3b;
-            padding-bottom: 8px;
-        }
+.news-card {
+    background: white;
+    margin: 18px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 7px #ccc;
+}
 
-        .news-card {
-            background: white;
-            margin: 15px 0;
-            padding: 18px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px #ccc;
-        }
+.news-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
 
-        .news-card h3 {
-            margin-top: 0;
-            color: #222;
-        }
+.news-content {
+    padding: 18px;
+}
 
-        .news-card p {
-            color: #555;
-        }
+.news-card h3 {
+    margin-top: 0;
+    color: #222;
+}
 
-        footer {
-            background: #0b7a3b;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-        }
-    </style>
-</head>
+.news-card p {
+    color: #555;
+    line-height: 1.5;
+}
 
-<body>
+.read-more {
+    display: inline-block;
+    background: #0b7a3b;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+}
 
-<header>
+footer {
+    background: #0b7a3b;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+</style></head><body><header>
     <h1>🇵🇰 Pakistan News</h1>
-    <p>Latest News from Pakistan</p>
-</header>
-
-<nav>
+    <p>Latest News & Updates from Pakistan</p>
+</header><nav>
     <button onclick="showNews('latest')">Latest News</button>
     <button onclick="showNews('lahore')">Lahore News</button>
     <button onclick="showNews('karachi')">Karachi News</button>
     <button onclick="showNews('islamabad')">Islamabad News</button>
-</nav>
-
-<div class="search">
+</nav><div class="search">
     <input type="text" id="searchBox"
-           placeholder="Search News..."
-           onkeyup="searchNews()">
-</div>
+    placeholder="🔍 Search News..."
+    onkeyup="searchNews()">
+</div><div class="container"><h2 class="section-title" id="sectionTitle">
+    Latest News
+</h2>
 
-<div class="container">
+<div id="newsContainer"></div>
 
-    <h2 class="section-title" id="sectionTitle">
-        Latest News
-    </h2>
-
-    <div id="newsContainer">
-
-        <div class="news-card">
-            <h3>Pakistan Latest News</h3>
-            <p>Pakistan se mutaliq latest updates yahan dekhein.</p>
-        </div>
-
-        <div class="news-card">
-            <h3>Important National Updates</h3>
-            <p>Pakistan ke mukhtalif shehron aur ilaqon ki khabrein.</p>
-        </div>
-
-    </div>
-
-</div>
-
-<footer>
+</div><footer>
     <p>© 2026 Pakistan News</p>
-</footer>
-
-<script>
+    <p>All Rights Reserved</p>
+</footer><script>
 
 const newsData = {
 
-    latest: [
-        {
-            title: "Pakistan Latest News",
-            text: "Pakistan se mutaliq latest updates yahan dekhein."
-        },
-        {
-            title: "National News",
-            text: "Pakistan ke mukhtalif ilaqon ki important khabrein."
-        }
-    ],
+latest: [
+{
+title: "Pakistan Latest News",
+text: "Pakistan se mutaliq latest updates aur important national news.",
+image: "https://images.unsplash.com/photo-1567608250368-4e5e0e6b7a9c?auto=format&fit=crop&w=900&q=80"
+},
+{
+title: "National Updates",
+text: "Pakistan ke mukhtalif shehron aur ilaqon se important updates.",
+image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=900&q=80"
+}
+],
 
-    lahore: [
-        {
-            title: "Lahore News",
-            text: "Lahore se mutaliq latest news aur updates."
-        },
-        {
-            title: "Lahore City Updates",
-            text: "Lahore ke mukhtalif ilaqon ki important khabrein."
-        }
-    ],
+lahore: [
+{
+title: "Lahore News",
+text: "Lahore se mutaliq latest news aur city updates.",
+image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80"
+},
+{
+title: "Lahore City Updates",
+text: "Lahore ke mukhtalif ilaqon ki important khabrein.",
+image: "https://images.unsplash.com/photo-1590050752117-238cb0fbf7ec?auto=format&fit=crop&w=900&q=80"
+}
+],
 
-    karachi: [
-        {
-            title: "Karachi News",
-            text: "Karachi se mutaliq latest news aur updates."
-        },
-        {
-            title: "Karachi City Updates",
-            text: "Karachi ke mukhtalif ilaqon ki important khabrein."
-        }
-    ],
+karachi: [
+{
+title: "Karachi News",
+text: "Karachi se mutaliq latest news aur important updates.",
+image: "https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=900&q=80"
+},
+{
+title: "Karachi City Updates",
+text: "Karachi ke mukhtalif ilaqon ki latest information.",
+image: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=900&q=80"
+}
+],
 
-    islamabad: [
-        {
-            title: "Islamabad News",
-            text: "Islamabad se mutaliq latest news aur updates."
-        },
-        {
-            title: "Islamabad City Updates",
-            text: "Islamabad ke mukhtalif ilaqon ki important khabrein."
-        }
-    ]
+islamabad: [
+{
+title: "Islamabad News",
+text: "Islamabad se mutaliq latest news aur updates.",
+image: "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=900&q=80"
+},
+{
+title: "Islamabad City Updates",
+text: "Islamabad aur surrounding areas ki important khabrein.",
+image: "https://images.unsplash.com/photo-1584286595398-a59f21d310a1?auto=format&fit=crop&w=900&q=80"
+}
+]
+
 };
 
 
 function showNews(category) {
 
-    const container = document.getElementById("newsContainer");
-    const title = document.getElementById("sectionTitle");
+const container = document.getElementById("newsContainer");
+const title = document.getElementById("sectionTitle");
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
-    if (category === "latest") {
-        title.innerText = "Latest News";
-    }
+if (category === "latest") {
+title.innerText = "Latest News";
+}
 
-    if (category === "lahore") {
-        title.innerText = "Lahore News";
-    }
+if (category === "lahore") {
+title.innerText = "Lahore News";
+}
 
-    if (category === "karachi") {
-        title.innerText = "Karachi News";
-    }
+if (category === "karachi") {
+title.innerText = "Karachi News";
+}
 
-    if (category === "islamabad") {
-        title.innerText = "Islamabad News";
-    }
+if (category === "islamabad") {
+title.innerText = "Islamabad News";
+}
 
-    newsData[category].forEach(news => {
+newsData[category].forEach(news => {
 
-        container.innerHTML += `
-            <div class="news-card">
-                <h3>${news.title}</h3>
-                <p>${news.text}</p>
-            </div>
-        `;
+container.innerHTML += `
+<div class="news-card">
 
-    });
+<img src="${news.image}" alt="${news.title}">
+
+<div class="news-content">
+
+<h3>${news.title}</h3>
+
+<p>${news.text}</p>
+
+<a href="#" class="read-more">
+Read More
+</a>
+
+</div>
+
+</div>
+`;
+
+});
+
 }
 
 
 function searchNews() {
 
-    const search = document
-        .getElementById("searchBox")
-        .value
-        .toLowerCase();
+const search = document
+.getElementById("searchBox")
+.value
+.toLowerCase();
 
-    const cards = document.querySelectorAll(".news-card");
+const cards = document.querySelectorAll(".news-card");
 
-    cards.forEach(card => {
+cards.forEach(card => {
 
-        const text = card.innerText.toLowerCase();
+const text = card.innerText.toLowerCase();
 
-        if (text.includes(search)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-
-    });
+if (text.includes(search)) {
+card.style.display = "block";
+} else {
+card.style.display = "none";
 }
 
-</script>
+});
 
-</body>
+}
+
+
+showNews("latest");
+
+</script></body>
 </html>
