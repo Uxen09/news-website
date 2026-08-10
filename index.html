@@ -7,160 +7,93 @@
 <title>Pakistan News</title>
 
 <style>
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f2f2f2;
-    color:#222;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
 }
 
-header{
-    background:#075b35;
-    color:white;
-    text-align:center;
-    padding:18px 10px;
+header {
+    background: #087a3d;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
-header h1{
-    margin:0;
-    font-size:25px;
+header h1 {
+    margin: 0;
+    font-size: 30px;
 }
 
-header p{
-    margin:6px 0 0;
-    font-size:13px;
+nav {
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px #bbb;
 }
 
-nav{
-    background:white;
-    padding:14px 8px;
-    text-align:center;
-    box-shadow:0 2px 5px #ccc;
+nav button {
+    background: #087a3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-nav button{
-    background:#075b35;
-    color:white;
-    border:0;
-    padding:10px 13px;
-    margin:4px;
-    border-radius:5px;
-    cursor:pointer;
+nav button:hover {
+    background: #055b2d;
 }
 
-nav button:hover{
-    background:#0b7a3b;
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 10px;
 }
 
-.search{
-    padding:18px;
-    text-align:center;
+#sectionTitle {
+    color: #087a3d;
+    border-bottom: 3px solid #087a3d;
+    padding-bottom: 8px;
 }
 
-.search input{
-    width:90%;
-    max-width:600px;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    font-size:15px;
+.news-card {
+    background: white;
+    margin: 15px 0;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 7px #ccc;
 }
 
-.container{
-    padding:10px;
-    max-width:1100px;
-    margin:auto;
+.news-card h2 {
+    margin-top: 0;
+    color: #222;
 }
 
-.section-title{
-    color:#075b35;
-    border-bottom:2px solid #075b35;
-    padding-bottom:8px;
-    margin-top:15px;
+.news-card p {
+    color: #555;
+    line-height: 1.6;
 }
 
-.news-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
+.news-card small {
+    color: #087a3d;
+    font-weight: bold;
 }
 
-.card{
-    background:white;
-    border-radius:7px;
-    overflow:hidden;
-    box-shadow:0 2px 7px #ccc;
-}
-
-.card img{
-    width:100%;
-    height:150px;
-    object-fit:cover;
-}
-
-.card-content{
-    padding:14px;
-}
-
-.card h3{
-    color:#075b35;
-    margin-top:0;
-}
-
-.card p{
-    line-height:1.5;
-    color:#555;
-}
-
-.read{
-    background:#075b35;
-    color:white;
-    border:0;
-    padding:10px 14px;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-.read:hover{
-    background:#0b7a3b;
-}
-
-#newsArea{
-    margin-top:10px;
-}
-
-.article{
-    background:white;
-    padding:20px;
-    border-radius:8px;
-    box-shadow:0 2px 7px #ccc;
-    line-height:1.7;
-}
-
-.article h2{
-    color:#075b35;
-}
-
-.back{
-    background:#075b35;
-    color:white;
-    border:0;
-    padding:10px 15px;
-    border-radius:5px;
-    cursor:pointer;
-    margin-bottom:15px;
-}
-
-footer{
-    margin-top:30px;
-    background:#075b35;
-    color:white;
-    text-align:center;
-    padding:20px;
+footer {
+    background: #087a3d;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
 }
 </style>
 </head>
@@ -169,244 +102,132 @@ footer{
 
 <header>
     <h1>🇵🇰 Pakistan News</h1>
-    <p>Latest News & Updates from Pakistan</p>
+    <p>Latest News & Updates</p>
 </header>
 
 <nav>
-    <button onclick="showCategory('latest')">Latest News</button>
-    <button onclick="showCategory('lahore')">Lahore News</button>
-    <button onclick="showCategory('karachi')">Karachi News</button>
-    <button onclick="showCategory('islamabad')">Islamabad News</button>
-    <button onclick="showCategory('national')">National Updates</button>
+    <button onclick="showNews('latest')">Latest News</button>
+    <button onclick="showNews('lahore')">Lahore News</button>
+    <button onclick="showNews('karachi')">Karachi News</button>
+    <button onclick="showNews('islamabad')">Islamabad News</button>
+    <button onclick="showNews('national')">National Update</button>
 </nav>
-
-<div class="search">
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="🔎 Search News..."
-        onkeyup="searchNews()"
-    >
-</div>
 
 <div class="container">
 
-    <div id="newsArea"></div>
+    <h2 id="sectionTitle">Latest News</h2>
+
+    <div id="newsContainer"></div>
 
 </div>
 
 <footer>
-    <p>© 2026 Pakistan News</p>
+    © 2026 Pakistan News
 </footer>
 
 <script>
 
-const news = [
+const news = {
 
-{
-    id:1,
-    category:"lahore",
-    title:"Lahore Latest News",
-    image:"https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
-    short:"Lahore se aaj ki important news aur latest updates.",
-    full:"Lahore se aaj ki important developments samne aayi hain. Shehar ke mukhtalif areas mein administrative aur public activities jari hain. Mazeed updates Pakistan News par milengi."
-},
+    latest: [
+        {
+            title: "پاکستان کی تازہ ترین خبریں",
+            text: "یہاں پاکستان کی تازہ ترین اہم خبریں اور قومی اپڈیٹس دکھائی جائیں گی۔",
+            source: "Latest News"
+        },
+        {
+            title: "ملک بھر کی اہم پیش رفت",
+            text: "پاکستان کے مختلف شہروں سے اہم معلومات اور تازہ اپڈیٹس یہاں شامل کی جائیں گی۔",
+            source: "Pakistan News"
+        }
+    ],
 
-{
-    id:2,
-    category:"lahore",
-    title:"Lahore City Updates",
-    image:"https://images.unsplash.com/photo-1598005182139-31d4a5b2f9b4?auto=format&fit=crop&w=800&q=80",
-    short:"Lahore ke mukhtalif areas se important information.",
-    full:"Lahore ke mukhtalif ilaqon se important information samne aa rahi hai. Local authorities apne routine operations jari rakhe hue hain. Citizens ko latest announcements par nazar rakhne ki hidayat ki gayi hai."
-},
+    lahore: [
+        {
+            title: "لاہور کی تازہ خبر",
+            text: "لاہور شہر سے متعلق تازہ ترین خبریں اور اہم مقامی اپڈیٹس یہاں دکھائی جائیں گی۔",
+            source: "Lahore News"
+        },
+        {
+            title: "لاہور میں اہم پیش رفت",
+            text: "لاہور کے مختلف علاقوں سے اہم معلومات اور خبریں یہاں شامل ہوں گی۔",
+            source: "Lahore News"
+        }
+    ],
 
-{
-    id:3,
-    category:"lahore",
-    title:"Lahore News Today",
-    image:"https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=800&q=80",
-    short:"Lahore mein hone wali important developments aur updates.",
-    full:"Lahore mein aaj mukhtalif important activities aur developments report hui hain. Mazeed details aur official updates jald is page par update ki jayengi."
-},
+    karachi: [
+        {
+            title: "کراچی کی تازہ خبر",
+            text: "کراچی شہر سے متعلق تازہ ترین خبریں اور مقامی اپڈیٹس یہاں دکھائی جائیں گی۔",
+            source: "Karachi News"
+        },
+        {
+            title: "کراچی میں اہم پیش رفت",
+            text: "کراچی کے مختلف علاقوں سے اہم معلومات اور خبریں یہاں شامل ہوں گی۔",
+            source: "Karachi News"
+        }
+    ],
 
-{
-    id:4,
-    category:"karachi",
-    title:"Karachi Latest News",
-    image:"https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&fit=crop&w=800&q=80",
-    short:"Karachi se latest important news aur updates.",
-    full:"Karachi se latest updates samne aa rahi hain. Shehar ke mukhtalif ilaqon mein routine activities jari hain. Important developments ko Pakistan News par update kiya jayega."
-},
+    islamabad: [
+        {
+            title: "اسلام آباد کی تازہ خبر",
+            text: "اسلام آباد سے متعلق تازہ ترین خبریں اور اہم اپڈیٹس یہاں دکھائی جائیں گی۔",
+            source: "Islamabad News"
+        },
+        {
+            title: "وفاقی دارالحکومت کی اہم خبر",
+            text: "اسلام آباد میں ہونے والی اہم سرگرمیوں اور خبروں کی اپڈیٹس یہاں شامل ہوں گی۔",
+            source: "Islamabad News"
+        }
+    ],
 
-{
-    id:5,
-    category:"karachi",
-    title:"Karachi City Updates",
-    image:"https://images.unsplash.com/photo-1569074187119-c87815b476da?auto=format&fit=crop&w=800&q=80",
-    short:"Karachi ke mukhtalif ilaqon se important updates.",
-    full:"Karachi ke mukhtalif areas se important updates report hui hain. Local administration aur relevant departments ki activities jari hain."
-},
+    national: [
+        {
+            title: "قومی اپڈیٹ",
+            text: "پاکستان بھر سے قومی سطح کی اہم خبریں اور تازہ اپڈیٹس یہاں دکھائی جائیں گی۔",
+            source: "National Update"
+        },
+        {
+            title: "پاکستان کی اہم قومی خبر",
+            text: "ملک کی اہم قومی صورتحال اور تازہ معلومات یہاں شامل کی جائیں گی۔",
+            source: "National Update"
+        }
+    ]
 
-{
-    id:6,
-    category:"islamabad",
-    title:"Islamabad Latest News",
-    image:"https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
-    short:"Islamabad se latest news aur important updates.",
-    full:"Islamabad se latest developments samne aayi hain. Capital mein mukhtalif official aur public activities jari hain. Mazeed verified updates yahan publish ki jayengi."
-},
+};
 
-{
-    id:7,
-    category:"islamabad",
-    title:"Islamabad City Updates",
-    image:"https://images.unsplash.com/photo-1524498250077-390f9e378fc0?auto=format&fit=crop&w=800&q=80",
-    short:"Federal capital se important information.",
-    full:"Federal capital Islamabad se important information samne aayi hai. Relevant departments ki activities aur announcements ko monitor kiya ja raha hai."
-},
+function showNews(category) {
 
-{
-    id:8,
-    category:"national",
-    title:"Pakistan National Update",
-    image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80",
-    short:"Pakistan ke hawale se latest national updates.",
-    full:"Pakistan ke hawale se latest national developments samne aa rahi hain. Important national updates ko verified information ke sath is website par publish kiya jayega."
-}
+    const container = document.getElementById("newsContainer");
+    const title = document.getElementById("sectionTitle");
 
-];
+    const names = {
+        latest: "Latest News",
+        lahore: "Lahore News",
+        karachi: "Karachi News",
+        islamabad: "Islamabad News",
+        national: "National Update"
+    };
 
-function showCategory(category){
+    title.innerText = names[category];
 
-    let filtered;
+    container.innerHTML = "";
 
-    if(category === "latest"){
-        filtered = news;
-    }else{
-        filtered = news.filter(item => item.category === category);
-    }
+    news[category].forEach(item => {
 
-    displayNews(filtered);
-
-    window.scrollTo({
-        top:250,
-        behavior:"smooth"
-    });
-}
-
-
-function displayNews(list){
-
-    const area = document.getElementById("newsArea");
-
-    if(list.length === 0){
-
-        area.innerHTML = `
-        <h2 class="section-title">News</h2>
-        <p>No news found.</p>
-        `;
-
-        return;
-    }
-
-    let html = `
-        <h2 class="section-title">Latest News</h2>
-        <div class="news-grid">
-    `;
-
-    list.forEach(item => {
-
-        html += `
-        <div class="card">
-
-            <img src="${item.image}" alt="${item.title}">
-
-            <div class="card-content">
-
-                <h3>${item.title}</h3>
-
-                <p>${item.short}</p>
-
-                <button class="read"
-                    onclick="readNews(${item.id})">
-                    Read More
-                </button>
-
+        container.innerHTML += `
+            <div class="news-card">
+                <h2>${item.title}</h2>
+                <p>${item.text}</p>
+                <small>Source: ${item.source}</small>
             </div>
-
-        </div>
         `;
 
     });
 
-    html += `</div>`;
-
-    area.innerHTML = html;
 }
 
-
-function readNews(id){
-
-    const item = news.find(n => n.id === id);
-
-    const area = document.getElementById("newsArea");
-
-    area.innerHTML = `
-
-        <div class="article">
-
-            <button class="back"
-                onclick="showCategory('latest')">
-                ← Back to News
-            </button>
-
-            <img
-                src="${item.image}"
-                alt="${item.title}"
-                style="width:100%;max-height:350px;object-fit:cover;border-radius:7px;"
-            >
-
-            <h2>${item.title}</h2>
-
-            <p>
-                ${item.full}
-            </p>
-
-            <p>
-                <b>Pakistan News</b> — Latest updates and
-                important information.
-            </p>
-
-        </div>
-    `;
-
-    window.scrollTo({
-        top:250,
-        behavior:"smooth"
-    });
-}
-
-
-function searchNews(){
-
-    const text =
-        document.getElementById("searchBox")
-        .value
-        .toLowerCase();
-
-    const results = news.filter(item =>
-        item.title.toLowerCase().includes(text) ||
-        item.short.toLowerCase().includes(text) ||
-        item.full.toLowerCase().includes(text)
-    );
-
-    displayNews(results);
-}
-
-
-// Website open hone par Latest News
-showCategory("latest");
+showNews("latest");
 
 </script>
 
